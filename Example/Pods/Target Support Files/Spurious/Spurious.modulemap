@@ -1,0 +1,6 @@
+framework module Spurious {
+  umbrella header "Spurious-umbrella.h"
+
+  export *
+  module * { export * }
+}

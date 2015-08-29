@@ -1,0 +1,6 @@
+framework module Pods_Spurious_Tests {
+  umbrella header "Pods-Spurious_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}
