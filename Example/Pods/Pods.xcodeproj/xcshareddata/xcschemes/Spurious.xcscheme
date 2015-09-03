@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6B8E8177B28CE5D1845E397D"
+               BlueprintIdentifier = "0AD89ECEAAC9F96F619394FC"
                BuildableName = "Spurious.framework"
                BlueprintName = "Spurious"
                ReferencedContainer = "container:Pods.xcodeproj">
