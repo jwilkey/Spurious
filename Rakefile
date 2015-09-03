@@ -6,8 +6,9 @@ task :trim do
     components = item.split(' ')
     next if components[0] != 'M'
 
-    # path = "#{Dir.pwd}/#{item.split(' ')[1]}"
-    path = item.split(' ')[1]
+    path = components[1]
+    # next if File.exists?(path) == false
+    puts "trimmed #{path}"
     temp_file = Tempfile.new("git.temp")
     begin
       File.open(path, 'r') do |file|
