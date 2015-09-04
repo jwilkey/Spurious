@@ -29,7 +29,7 @@ public class Spurious: SpuriousType, CustomStringConvertible {
         if let stub = findStub(callIdentifier) {
             return stub.yield as! T
         } else {
-            throw SpuriousError.NoStub
+            throw SpuriousError.NoStub(callIdentifier: callIdentifier)
         }
     }
 
@@ -79,7 +79,16 @@ public class SpuriousStub {
     }
 }
 
-enum SpuriousError: ErrorType {
-    case NoStub
+public enum SpuriousError: ErrorType, CustomStringConvertible {
+    case NoStub(callIdentifier: String)
+
+    public var description: String {
+        get {
+            switch self {
+            case let NoStub(callIdentifier):
+                return "There is no stub registered for \(callIdentifier)"
+            }
+        }
+    }
 }
 
