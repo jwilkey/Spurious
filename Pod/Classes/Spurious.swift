@@ -46,41 +46,27 @@ public class Spurious: SpuriousType, CustomStringConvertible {
     }
 
     public func wasCalled(callIdentifier: String, with parameters: [SpuriousArgumentExpectation]) -> Bool {
-        if calls.count == 0 {
-            logger.logFailureDetail("<Spurious> There have been no recorded calls")
+        guard verifyHasReceivedCalls() else {
             return false
         }
 
-        let callsMatchingIdentifier = calls.filter { (call) -> Bool in
-            call.callIdentifier == callIdentifier
-        }
-        if callsMatchingIdentifier.count == 0 {
-            logger.logFailureDetail("<Spurious> No calls identified by '\(callIdentifier)'. Received calls:\n\(calls)")
+        let callsMatchingIdentifier = callsForIdentifier(callIdentifier)
+        guard verifyHasReceivedCalls(callsMatchingIdentifier, callIdentifier: callIdentifier) else {
             return false
         }
 
-        let index = callsMatchingIdentifier.indexOf { (call) -> Bool in
-            if parameters.count != call.parameters?.count {
-                return false
-            }
-            for var i = 0; i < parameters.count; i++ {
-                let expectedParameter = parameters[i]
-                let calledParameter = call.parameters![i]
-
-                if !expectedParameter.isEqualTo(calledParameter) {
-                    return false
-                }
-            }
-
-            return true
-        }
-
-        if index == nil {
-            logger.logFailureDetail("<Spurious> No calls with matching parameters for identifier '\(callIdentifier)'. Received calls:\n\(callsMatchingIdentifier)")
+        let matchingCall = findCall(callsMatchingIdentifier, with: parameters)
+        guard verifyMatchingCall(matchingCall, callIdentifier: callIdentifier, callsMatchingIdentifier: callsMatchingIdentifier) else {
             return false
         }
 
         return true
+    }
+
+    public func callsForIdentifier(callIdentifier: String) -> [SpuriousCall] {
+        return calls.filter { (call) -> Bool in
+            call.callIdentifier == callIdentifier
+        }
     }
 
     public var description: String {
@@ -98,10 +84,52 @@ extension Spurious {
         return index != nil ? stubs[index!] : nil
     }
 
-    public func findCall<T:AnyObject where T:Equatable>(callIdentifier: String, with parameters: [T]) -> SpuriousCall? {
-        return nil
+    public func findCall(fromCalls: [SpuriousCall], with parameters: [SpuriousArgumentExpectation]) -> SpuriousCall? {
+        let index = fromCalls.indexOf { (call) -> Bool in
+            if parameters.count != call.parameters?.count {
+                return false
+            }
+            for var i = 0; i < parameters.count; i++ {
+                let expectedParameter = parameters[i]
+                let calledParameter = call.parameters![i]
+
+                if !expectedParameter.isEqualTo(calledParameter) {
+                    return false
+                }
+            }
+
+            return true
+        }
+
+        return index != nil ? fromCalls[index!] : nil
     }
 
+}
+
+extension Spurious {
+    private func verifyHasReceivedCalls() -> Bool {
+        if calls.count == 0 {
+            logger.logFailureDetail("<Spurious> There have been no recorded calls")
+            return false
+        }
+        return true
+    }
+
+    private func verifyHasReceivedCalls(fromCalls: [SpuriousCall], callIdentifier: String) -> Bool {
+        if fromCalls.count == 0 {
+            logger.logFailureDetail("<Spurious> No calls identified by '\(callIdentifier)'. Received calls:\n\(calls)")
+            return false
+        }
+        return true
+    }
+
+    private func verifyMatchingCall(call: SpuriousCall?, callIdentifier: String, callsMatchingIdentifier: [SpuriousCall]) -> Bool {
+        if call == nil {
+            logger.logFailureDetail("<Spurious> No calls with matching parameters for identifier '\(callIdentifier)'. Received calls:\n\(callsMatchingIdentifier)")
+            return false
+        }
+        return true
+    }
 }
 
 extension SpuriousLoggerType {
