@@ -8,33 +8,33 @@ public protocol SpuriousManagerType {
 }
 
 public class SpuriousManager: SpuriousManagerType {
-    
+
     public static let sharedInstance = SpuriousManager()
-    
+
     private var spuriousInstances: Dictionary<ObjectIdentifier, SpuriousType> = [:]
-    
+
     public subscript(identifier: ObjectIdentifier) -> SpuriousType? {
         return spuriousInstances[identifier]
     }
-    
+
     public func getSpuriousForIdentifier(identifier: ObjectIdentifier) -> SpuriousType? {
         return spuriousInstances[identifier]
     }
-    
+
     public func getOrCreateSpuriousForIdentifier(identifier: ObjectIdentifier) -> SpuriousType {
         if spuriousInstances[identifier] == nil {
-            spuriousInstances[identifier] = Spurious()
+            spuriousInstances[identifier] = Spurious(identifier)
         }
-        
+
         return spuriousInstances[identifier]!
     }
-    
+
     public func setSpurious(spurious: SpuriousType, forIdentifier identifier: ObjectIdentifier) {
         spuriousInstances[identifier] = spurious
     }
-    
+
     public func removeSpuriousForIdentifier(identifier: ObjectIdentifier) {
         spuriousInstances.removeValueForKey(identifier)
     }
-    
+
 }

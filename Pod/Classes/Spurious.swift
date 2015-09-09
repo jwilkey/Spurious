@@ -1,21 +1,33 @@
 import Foundation
 
 public protocol SpuriousType : class {
-    func called(callIdentifier: String)
+    func called(callIdentifier: String, _ parameters: [AnyObject])
     func stub(callIdentifier: String, yield: AnyObject)
     func yield<T>(callIdentifier: String) throws -> T
-    func didCall(callIdentifier: String) -> Bool
+    func wasCalled(callIdentifier: String, with: [SpuriousArgumentExpectation]) -> Bool
+}
+
+public protocol SpuriousLoggerType {
+    func logFailureDetail(detail: String)
 }
 
 public class Spurious: SpuriousType, CustomStringConvertible {
 
+    private class Logger: SpuriousLoggerType {}
+
     public var calls: [SpuriousCall] = []
     var stubs: [SpuriousStub] = []
+    var testSubjects: [ObjectIdentifier] = []
+    public var logger: SpuriousLoggerType = Logger()
 
     public init() {}
 
-    public func called(callIdentifier: String) {
-        calls.append(SpuriousCall(callIdentifier: callIdentifier))
+    public init(_ objectIdentifier: ObjectIdentifier) {
+        testSubjects.append(objectIdentifier)
+    }
+
+    public func called(callIdentifier: String, _ parameters: [AnyObject]) {
+        calls.append(SpuriousCall(callIdentifier: callIdentifier, parameters: parameters))
     }
 
     public func stub(callIdentifier: String, yield: AnyObject) {
@@ -29,12 +41,46 @@ public class Spurious: SpuriousType, CustomStringConvertible {
         if let stub = findStub(callIdentifier) {
             return stub.yield as! T
         } else {
-            throw SpuriousError.NoStub(callIdentifier: callIdentifier)
+            throw SpuriousError.NoStub(callIdentifier: callIdentifier, subjects: testSubjects)
         }
     }
 
-    public func didCall(callIdentifier: String) -> Bool {
-        return findCall(callIdentifier) != nil
+    public func wasCalled(callIdentifier: String, with parameters: [SpuriousArgumentExpectation]) -> Bool {
+        if calls.count == 0 {
+            logger.logFailureDetail("<Spurious> There have been no recorded calls")
+            return false
+        }
+
+        let callsMatchingIdentifier = calls.filter { (call) -> Bool in
+            call.callIdentifier == callIdentifier
+        }
+        if callsMatchingIdentifier.count == 0 {
+            logger.logFailureDetail("<Spurious> No calls identified by '\(callIdentifier)'. Received calls:\n\(calls)")
+            return false
+        }
+
+        let index = callsMatchingIdentifier.indexOf { (call) -> Bool in
+            if parameters.count != call.parameters?.count {
+                return false
+            }
+            for var i = 0; i < parameters.count; i++ {
+                let expectedParameter = parameters[i]
+                let calledParameter = call.parameters![i]
+
+                if !expectedParameter.isEqualTo(calledParameter) {
+                    return false
+                }
+            }
+
+            return true
+        }
+
+        if index == nil {
+            logger.logFailureDetail("<Spurious> No calls with matching parameters for identifier '\(callIdentifier)'. Received calls:\n\(callsMatchingIdentifier)")
+            return false
+        }
+
+        return true
     }
 
     public var description: String {
@@ -52,21 +98,32 @@ extension Spurious {
         return index != nil ? stubs[index!] : nil
     }
 
-    public func findCall(callIdentifier: String) -> SpuriousCall? {
-        let index = calls.indexOf { (call) -> Bool in
-            call.callIdentifier == callIdentifier
-        }
-        return index != nil ? calls[index!] : nil
+    public func findCall<T:AnyObject where T:Equatable>(callIdentifier: String, with parameters: [T]) -> SpuriousCall? {
+        return nil
     }
 
 }
 
-public class SpuriousCall {
-    let callIdentifier: String
-
-    init(callIdentifier: String) {
-        self.callIdentifier = callIdentifier
+extension SpuriousLoggerType {
+    func logFailureDetail(detail: String) {
+        print(detail)
     }
+}
+
+public class SpuriousCall: CustomStringConvertible {
+
+    let callIdentifier: String
+    var parameters: [AnyObject]?
+
+    public var description: String {
+        return "<SpuriousCall> \(ObjectIdentifier(self).hashValue) identifier: '\(self.callIdentifier)' parameters: \(self.parameters!)"
+    }
+
+    public init(callIdentifier: String, parameters: [AnyObject]?) {
+        self.callIdentifier = callIdentifier
+        self.parameters = parameters
+    }
+
 }
 
 public class SpuriousStub {
@@ -80,15 +137,22 @@ public class SpuriousStub {
 }
 
 public enum SpuriousError: ErrorType, CustomStringConvertible {
-    case NoStub(callIdentifier: String)
+    case NoStub(callIdentifier: String, subjects: [ObjectIdentifier])
 
     public var description: String {
         get {
             switch self {
-            case let NoStub(callIdentifier):
-                return "There is no stub registered for \(callIdentifier)"
+            case let NoStub(callIdentifier, subjects):
+                return "There is no stub registered for (\(callIdentifier)) with test subjects: \(subjects)"
             }
         }
     }
 }
 
+extension ObjectIdentifier: CustomStringConvertible {
+    public var description: String {
+        get {
+            return "ObjectIdentifier: \(self.hashValue)"
+        }
+    }
+}
