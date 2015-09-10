@@ -15,6 +15,9 @@
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* ExampleAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* ExampleAppTests.swift */; };
 		91455BEFE941FC738D94EF27 /* Pods_Spurious_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF8F6FB35491EC0D8C3D2B57 /* Pods_Spurious_Example.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		C097A5631B9E16520007D96D /* ManualSpurious.swift in Sources */ = {isa = PBXBuildFile; fileRef = C097A5621B9E16520007D96D /* ManualSpurious.swift */; settings = {ASSET_TAGS = (); }; };
+		C097A5651B9E17180007D96D /* SpuriousSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = C097A5641B9E17180007D96D /* SpuriousSpec.swift */; settings = {ASSET_TAGS = (); }; };
+		C097A56A1BA0CAD80007D96D /* SuperHero.swift in Sources */ = {isa = PBXBuildFile; fileRef = C097A5691BA0CAD80007D96D /* SuperHero.swift */; settings = {ASSET_TAGS = (); }; };
 		C0CEA6A41B9622A8004B6B0B /* SpuriousTestableSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CEA6A31B9622A8004B6B0B /* SpuriousTestableSpec.swift */; settings = {ASSET_TAGS = (); }; };
 		C0FB999C1B9147F30046508C /* AnswerLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FB999B1B9147F30046508C /* AnswerLoader.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
@@ -48,6 +51,9 @@
 		667EC9A92419B9B5FC0B2B3D /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		6CE8E609C4439DE4F3205D2F /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		BF8F6FB35491EC0D8C3D2B57 /* Pods_Spurious_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spurious_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C097A5621B9E16520007D96D /* ManualSpurious.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManualSpurious.swift; sourceTree = "<group>"; };
+		C097A5641B9E17180007D96D /* SpuriousSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpuriousSpec.swift; sourceTree = "<group>"; };
+		C097A5691BA0CAD80007D96D /* SuperHero.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuperHero.swift; sourceTree = "<group>"; };
 		C0CEA6A31B9622A8004B6B0B /* SpuriousTestableSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpuriousTestableSpec.swift; sourceTree = "<group>"; };
 		C0FB999B1B9147F30046508C /* AnswerLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerLoader.swift; sourceTree = "<group>"; };
 		F1A6B0C63A53E15F96C1BAC6 /* Pods-Spurious_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spurious_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Spurious_Example/Pods-Spurious_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -143,6 +149,8 @@
 				607FACEB1AFB9204008FA782 /* ExampleAppTests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 				C0CEA6A31B9622A8004B6B0B /* SpuriousTestableSpec.swift */,
+				C097A5641B9E17180007D96D /* SpuriousSpec.swift */,
+				C097A5681BA0CAAD0007D96D /* TestObjects */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -163,6 +171,15 @@
 				6CE8E609C4439DE4F3205D2F /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		C097A5681BA0CAAD0007D96D /* TestObjects */ = {
+			isa = PBXGroup;
+			children = (
+				C097A5621B9E16520007D96D /* ManualSpurious.swift */,
+				C097A5691BA0CAD80007D96D /* SuperHero.swift */,
+			);
+			name = TestObjects;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -365,9 +382,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C097A56A1BA0CAD80007D96D /* SuperHero.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				C0FB999C1B9147F30046508C /* AnswerLoader.swift in Sources */,
+				C097A5631B9E16520007D96D /* ManualSpurious.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,6 +394,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C097A5651B9E17180007D96D /* SpuriousSpec.swift in Sources */,
 				C0CEA6A41B9622A8004B6B0B /* SpuriousTestableSpec.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* ExampleAppTests.swift in Sources */,
 			);

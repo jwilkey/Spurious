@@ -5,15 +5,14 @@ public protocol SpuriousTestable : class {
     var spurious: SpuriousType { get set }
     var identifier: ObjectIdentifier { get }
 
-    func callSpurious(callIdentifier: String)
-    func callSpurious<T>(callIdentifier: String) -> T
+    func callSpurious(callIdentifier: String, with: [AnyObject])
+    func callSpurious<T>(callIdentifier: String, with: [AnyObject]) -> T
     func stub(callIdentifier: String, yield: AnyObject)
 
-    func wasCalled(callIdentifier: String) -> Bool
+    func wasCalled(callIdentifier: String, _ parameters: EquatableValueType...) -> Bool
 
     func cleanup()
 }
-
 
 public extension SpuriousTestable {
     var spurious: SpuriousType {
@@ -31,12 +30,12 @@ public extension SpuriousTestable {
         }
     }
 
-    func callSpurious(callIdentifier: String = __FUNCTION__) {
-        spurious.called(callIdentifier)
+    func callSpurious(callIdentifier: String = __FUNCTION__, with parameters: [AnyObject] = []) {
+        spurious.called(callIdentifier, parameters)
     }
 
-    func callSpurious<T>(callIdentifier: String = __FUNCTION__) -> T {
-        spurious.called(callIdentifier)
+    func callSpurious<T>(callIdentifier: String = __FUNCTION__, with parameters: [AnyObject] = []) -> T {
+        spurious.called(callIdentifier, parameters)
         return try! spurious.yield(callIdentifier)
     }
 
@@ -44,14 +43,12 @@ public extension SpuriousTestable {
         spurious.stub(callIdentifier, yield: yield)
     }
 
-    func wasCalled(callIdentifier: String) -> Bool {
-        return spurious.didCall(callIdentifier)
+    func wasCalled(callIdentifier: String, _ parameters: EquatableValueType...) -> Bool {
+        return spurious.wasCalled(callIdentifier, with: parameters)
     }
 
     func cleanup() {
         SpuriousManager.sharedInstance.removeSpuriousForIdentifier(ObjectIdentifier(self))
-    }
-
     }
 
 }

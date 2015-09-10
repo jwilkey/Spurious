@@ -1,11 +1,11 @@
 PODS:
   - Nimble (2.0.0-rc.2)
-  - Quick (0.5.1)
+  - Quick (0.6.0)
   - Spurious (0.1.1)
 
 DEPENDENCIES:
   - Nimble (= 2.0.0-rc.2)
-  - Quick (~> 0.5.0)
+  - Quick (~> 0.6.0)
   - Spurious (from `../`)
 
 EXTERNAL SOURCES:
@@ -14,7 +14,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Nimble: e3cf5e73a491daf21c2bc88783dbfc55ce8b8e02
-  Quick: 7426537a99e75076d6930c5b6da58006e4a9f38a
+  Quick: 563686dbcf0ae0f9f7401ac9cd2d786ee1b7f3d7
   Spurious: b6de6ed50194e52cfded02494cf834968244e306
 
 COCOAPODS: 0.38.2
