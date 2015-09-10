@@ -39,7 +39,7 @@
 		54CF0C69AC0EAD175A335C73B200AD2D /* Example.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8A3BECC87E9DB806D343B4FD46A602 /* Example.swift */; };
 		5AEDF2509C64FA21A01A60B00BC207C1 /* AsyncMatcherWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF0FE2901A348F5EE6BFBE51427080A /* AsyncMatcherWrapper.swift */; };
 		5B0ACDFA1081D13AB6D10491A4CAE247 /* AssertionRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8616CE7E4C845935EF8ED8663C92EF /* AssertionRecorder.swift */; };
-		5C82FD00E12D54F46D065086BB5BFAFC /* SpuriousArgumentExpectation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466753AAC5B71A69BFF6970D818D922B /* SpuriousArgumentExpectation.swift */; };
+		5C82FD00E12D54F46D065086BB5BFAFC /* EquatableValueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466753AAC5B71A69BFF6970D818D922B /* EquatableValueType.swift */; };
 		5E2F6ECA9842D17A6AC4732792CD2472 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C555CE37FEB460F73A9450692DA28692 /* XCTest.framework */; };
 		6225CF9DA6F89756739C085C5D809319 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE973BABE6EB3426E11A619043846DA /* Configuration.swift */; };
 		67A81D152AFF95795179C24D664B2E7C /* BeginWith.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A78F384987E90E65AF71060E5A9E6D5 /* BeginWith.swift */; };
@@ -166,7 +166,7 @@
 		44C856AF4C20524411158593A51CA78D /* DSL.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DSL.m; path = Nimble/objc/DSL.m; sourceTree = "<group>"; };
 		455A52D8126FCB137D06250A2415F1F6 /* Pods_Spurious_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spurious_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		45B6AFD9FBE21D3F25C08AEDF21FD0D7 /* World.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = World.h; path = Quick/World.h; sourceTree = "<group>"; };
-		466753AAC5B71A69BFF6970D818D922B /* SpuriousArgumentExpectation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SpuriousArgumentExpectation.swift; sourceTree = "<group>"; };
+		466753AAC5B71A69BFF6970D818D922B /* EquatableValueType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EquatableValueType.swift; sourceTree = "<group>"; };
 		466F2AFA62877918B5D80619E604CA9C /* NimbleXCTestHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NimbleXCTestHandler.swift; path = Nimble/Adapters/NimbleXCTestHandler.swift; sourceTree = "<group>"; };
 		477605B662AA9B0B72B9F1FD0470ADCC /* SourceLocation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SourceLocation.swift; path = Nimble/Utils/SourceLocation.swift; sourceTree = "<group>"; };
 		499AD7C9479ECD50EC59F1B8F116C79B /* Quick.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Quick.xcconfig; sourceTree = "<group>"; };
@@ -463,7 +463,7 @@
 			isa = PBXGroup;
 			children = (
 				72A4DAF92485D3232F3FFDC7437B6D76 /* Spurious.swift */,
-				466753AAC5B71A69BFF6970D818D922B /* SpuriousArgumentExpectation.swift */,
+				466753AAC5B71A69BFF6970D818D922B /* EquatableValueType.swift */,
 				8EFCD3FC051DE1784BF44329C442C406 /* SpuriousManager.swift */,
 				1C264725853297499FAF468750F37C4F /* SpuriousTestable.swift */,
 			);
@@ -803,7 +803,7 @@
 			files = (
 				5191261AA7CE026A831850275B6ECAB1 /* Spurious-dummy.m in Sources */,
 				C96EEC10F73E2D0264D9A69E25578E46 /* Spurious.swift in Sources */,
-				5C82FD00E12D54F46D065086BB5BFAFC /* SpuriousArgumentExpectation.swift in Sources */,
+				5C82FD00E12D54F46D065086BB5BFAFC /* EquatableValueType.swift in Sources */,
 				B93CC3211833D6F164120360D60C9162 /* SpuriousManager.swift in Sources */,
 				EF160454B75DE7ADF3E0F02D5BD31035 /* SpuriousTestable.swift in Sources */,
 			);

@@ -1,6 +1,6 @@
-public protocol SpuriousArgumentExpectation {
-    func getValue<U:Equatable>() -> U
+public protocol EquatableValueType {
     func isEqualTo(value: AnyObject) -> Bool
+    func getValue<U:Equatable>() -> U
 }
 
 public enum Argument {
@@ -9,35 +9,35 @@ public enum Argument {
 
 prefix operator <- {}
 
-public prefix func <-<T:Equatable>(eq: T) -> With<T> {
-    return With(eq)
+public prefix func <-<T:Equatable>(eq: T) -> EquatableValue<T> {
+    return EquatableValue(eq)
 }
 
-public func with<T:Equatable>(value: T) -> With<T> {
-    return With(value)
+public func with<T:Equatable>(value: T) -> EquatableValue<T> {
+    return EquatableValue(value)
 }
 
-public func and<T:Equatable>(value: T) -> With<T> {
-    return With(value)
+public func and<T:Equatable>(value: T) -> EquatableValue<T> {
+    return EquatableValue(value)
 }
 
-public func ==<T:Equatable>(lhs: With<T>, rhs: With<T>) -> Bool {
+public func ==<T:Equatable>(lhs: EquatableValue<T>, rhs: EquatableValue<T>) -> Bool {
     return lhs.value == rhs.value
 }
 
-public func ==<T:Equatable>(lhs: T, rhs: With<T>) -> Bool {
+public func ==<T:Equatable>(lhs: T, rhs: EquatableValue<T>) -> Bool {
     return lhs == rhs.value
 }
 
-public func ==<T:Equatable>(lhs: With<T>, rhs: Argument) -> Bool {
+public func ==<T:Equatable>(lhs: EquatableValue<T>, rhs: Argument) -> Bool {
     return lhs.value is Argument && lhs.value as? Argument == Argument.Anything && rhs == Argument.Anything
 }
 
-public func ==<T:Equatable>(lhs: With<T>, rhs: T) -> Bool {
+public func ==<T:Equatable>(lhs: EquatableValue<T>, rhs: T) -> Bool {
     return lhs.value == rhs
 }
 
-public class With<T: Equatable>: SpuriousArgumentExpectation, Equatable {
+public class EquatableValue<T: Equatable>: EquatableValueType, Equatable {
     var value: T
 
     public init(_ value: T) {

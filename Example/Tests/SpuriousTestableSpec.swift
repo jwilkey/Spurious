@@ -162,8 +162,8 @@ class SpuriousTestableSpec: QuickSpec {
                     expect(manualSpurious.wasCalled.wasCalled) == true
                     expect(manualSpurious.wasCalled.identifier) == "someFunction"
                     expect(manualSpurious.wasCalled.parameters.count) == 2
-                    let arg1 = manualSpurious.wasCalled.parameters[0] as! With<String>
-                    let arg2 = manualSpurious.wasCalled.parameters[1] as! With<Int>
+                    let arg1 = manualSpurious.wasCalled.parameters[0] as! EquatableValue<String>
+                    let arg2 = manualSpurious.wasCalled.parameters[1] as! EquatableValue<Int>
                     expect(arg1) == with("arg1")
                     expect(arg2) == with(2)
                 }
