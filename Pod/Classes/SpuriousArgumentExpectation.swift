@@ -23,6 +23,10 @@ public func ==<T:Equatable>(lhs: T, rhs: With<T>) -> Bool {
     return lhs == rhs.value
 }
 
+public func ==<T:Equatable>(lhs: With<T>, rhs: Argument) -> Bool {
+    return lhs.value is Argument && lhs.value as? Argument == Argument.Anything && rhs == Argument.Anything
+}
+
 public func ==<T:Equatable>(lhs: With<T>, rhs: T) -> Bool {
     return lhs.value == rhs
 }
@@ -39,6 +43,9 @@ public class With<T: Equatable>: SpuriousArgumentExpectation, Equatable {
     }
 
     public func isEqualTo(value: AnyObject) -> Bool {
+        if self == Argument.Anything {
+            return true
+        }
         if let anyValue: T? = value as? T {
             return self.value == anyValue
         }

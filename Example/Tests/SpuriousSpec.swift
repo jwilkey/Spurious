@@ -107,12 +107,27 @@ class SpuriousSpec: QuickSpec {
                 expect(logger.message) == "no failure"
             }
 
-            it("is a test for figuring out generics and types") {
-                let val = "hello"
-                let s = FakeSuperHero()
-                s.wasCalled("something", with("hello"), and(3), and(val))
+            context("Argument.Anything") {
+                it("returns true when used in place of Equatables") {
+                    subject.calls.append(SpuriousCall(callIdentifier: "theFunction", parameters: ["one", 2]))
+
+                    let wasCalled = subject.wasCalled("theFunction", with: [with(Argument.Anything), with(2)])
+
+                    expect(wasCalled) == true
+                    expect(logger.message) == "no failure"
+                }
+
+                it("returns true when used in place of non-Equatables") {
+                    class CantEquateMe {}
+
+                    subject.calls.append(SpuriousCall(callIdentifier: "theFunction", parameters: [CantEquateMe(), 2]))
+
+                    let wasCalled = subject.wasCalled("theFunction", with: [with(Argument.Anything), with(2)])
+
+                    expect(wasCalled) == true
+                    expect(logger.message) == "no failure"
+                }
             }
         }
-
     }
 }
