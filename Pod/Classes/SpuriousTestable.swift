@@ -9,7 +9,7 @@ public protocol SpuriousTestable : class {
     func callSpurious<T>(callIdentifier: String, with: [AnyObject]) -> T
     func stub(callIdentifier: String, yield: AnyObject)
 
-    func wasCalled(callIdentifier: String, _ parameters: SpuriousArgumentExpectation...) -> Bool
+    func wasCalled(callIdentifier: String, _ parameters: EquatableValueType...) -> Bool
 
     func cleanup()
 }
@@ -43,7 +43,7 @@ public extension SpuriousTestable {
         spurious.stub(callIdentifier, yield: yield)
     }
 
-    func wasCalled(callIdentifier: String, _ parameters: SpuriousArgumentExpectation...) -> Bool {
+    func wasCalled(callIdentifier: String, _ parameters: EquatableValueType...) -> Bool {
         return spurious.wasCalled(callIdentifier, with: parameters)
     }
 

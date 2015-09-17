@@ -13,7 +13,7 @@ public class ManualSpurious: SpuriousType, SpuriousTestable {
     public struct CallExpectation {
         public var wasCalled = false
         public var identifier = "chaos"
-        public var parameters = [SpuriousArgumentExpectation]()
+        public var parameters = [EquatableValueType]()
     }
 
     public var called = Call()
@@ -34,7 +34,7 @@ public class ManualSpurious: SpuriousType, SpuriousTestable {
         return 987 as! T
     }
 
-    public func wasCalled(callIdentifier: String, with: [SpuriousArgumentExpectation]) -> Bool {
+    public func wasCalled(callIdentifier: String, with: [EquatableValueType]) -> Bool {
         wasCalled.wasCalled = true
         wasCalled.identifier = callIdentifier
         wasCalled.parameters = with

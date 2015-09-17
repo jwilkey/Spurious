@@ -4,7 +4,7 @@ public protocol SpuriousType : class {
     func called(callIdentifier: String, _ parameters: [AnyObject])
     func stub(callIdentifier: String, yield: AnyObject)
     func yield<T>(callIdentifier: String) throws -> T
-    func wasCalled(callIdentifier: String, with: [SpuriousArgumentExpectation]) -> Bool
+    func wasCalled(callIdentifier: String, with: [EquatableValueType]) -> Bool
 }
 
 public protocol SpuriousLoggerType {
@@ -45,7 +45,7 @@ public class Spurious: SpuriousType, CustomStringConvertible {
         }
     }
 
-    public func wasCalled(callIdentifier: String, with parameters: [SpuriousArgumentExpectation]) -> Bool {
+    public func wasCalled(callIdentifier: String, with parameters: [EquatableValueType]) -> Bool {
         guard verifyHasReceivedCalls() else {
             return false
         }
@@ -84,7 +84,7 @@ extension Spurious {
         return index != nil ? stubs[index!] : nil
     }
 
-    public func findCall(fromCalls: [SpuriousCall], with parameters: [SpuriousArgumentExpectation]) -> SpuriousCall? {
+    public func findCall(fromCalls: [SpuriousCall], with parameters: [EquatableValueType]) -> SpuriousCall? {
         let index = fromCalls.indexOf { (call) -> Bool in
             if parameters.count != call.parameters?.count {
                 return false
