@@ -7,6 +7,12 @@ public enum Argument {
     case Anything
 }
 
+prefix operator <- {}
+
+public prefix func <-<T:Equatable>(eq: T) -> With<T> {
+    return With(eq)
+}
+
 public func with<T:Equatable>(value: T) -> With<T> {
     return With(value)
 }

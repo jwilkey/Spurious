@@ -20,6 +20,7 @@ public class ViewController: UIViewController {
         super.viewDidAppear(animated)
 
         loadTheAnswer()
+        answerLoader.sendTheResponse("a secret distress signal", count: 7)
     }
 
     @IBOutlet public weak var answerLabel: UILabel!
@@ -34,5 +35,9 @@ public class ViewController: UIViewController {
 class SlowApiAnswerLoader: AnswerLoader {
     func fetchTheAnswer() -> String {
         return "because sometimes the real thing is just too risky."
+    }
+
+    func sendTheResponse(response: String, count: Int) {
+        print("Sending '\(response)' with count: \(count)")
     }
 }

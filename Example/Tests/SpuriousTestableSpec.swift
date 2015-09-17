@@ -185,6 +185,14 @@ class SpuriousTestableSpec: QuickSpec {
                 itBehavesLike("passing along arguments")
             }
 
+            context("using <-") {
+                beforeEach {
+                    subject.wasCalled("someFunction", <-"arg1", <-2)
+                }
+
+                itBehavesLike("passing along arguments")
+            }
+
             context("using variable references") {
                 beforeEach {
                     let v1 = "arg1"
