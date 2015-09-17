@@ -3,6 +3,8 @@ import Foundation
 public protocol SpuriousTestable : class {
     var spurious: Spurious { get }
 
+    var identifier: ObjectIdentifier { get }
+
     func callSpurious(callIdentifier: String)
     func callSpurious<T>(callIdentifier: String) -> T
     func stub(callIdentifier: String, yield: AnyObject)
@@ -14,6 +16,10 @@ public extension SpuriousTestable {
     var spurious: Spurious {
         get {
             return Spurious.sharedInstance
+
+    var identifier: ObjectIdentifier {
+        get {
+            return ObjectIdentifier(self)
         }
     }
 
